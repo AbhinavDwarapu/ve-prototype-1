@@ -1,10 +1,4 @@
-import type {
-  TimelineStore,
-  Clip,
-  Layer,
-  ID,
-  TimelineStoreActions,
-} from "./types";
+import type { TimelineStore, Clip, Layer, TimelineStoreActions } from "./types";
 import type { StoreApi } from "zustand";
 
 type SetState = StoreApi<TimelineStore>["setState"];
@@ -12,56 +6,81 @@ type GetState = StoreApi<TimelineStore>["getState"];
 
 export const createTimelineActions = (
   set: SetState,
-  _get: GetState,
+  get: GetState,
 ): TimelineStoreActions => ({
-  addLayer: (timelineId: ID, layer: Layer) =>
-    set((state) => {
-      const timeline = state.timelines[timelineId];
-      if (!timeline || layer.timelineId !== timelineId) return state;
+  addLayer: (timelineId, layerInput) => {
+    const state = get();
+    const timeline = state.timelines[timelineId];
+    if (!timeline) return null;
 
-      const nextLayerIds = timeline.layerIds.includes(layer.id)
-        ? timeline.layerIds
-        : [...timeline.layerIds, layer.id];
+    const layerId = crypto.randomUUID();
+
+    const layer: Layer = {
+      ...layerInput,
+      id: layerId,
+      timelineId,
+    };
+
+    set((state) => {
+      const currentTimeline = state.timelines[timelineId];
+      if (!currentTimeline) return state;
+
+      const nextLayerIds = [...currentTimeline.layerIds, layerId];
 
       return {
         layers: {
           ...state.layers,
-          [layer.id]: layer,
+          [layerId]: layer,
         },
         timelines: {
           ...state.timelines,
           [timelineId]: {
-            ...timeline,
+            ...currentTimeline,
             layerIds: nextLayerIds,
           },
         },
       };
-    }),
+    });
 
-  addClip: (layerId: ID, clip: Clip) =>
+    return layerId;
+  },
+
+  addClip: (layerId, clipToAdd) => {
+    const state = get();
+    const layer = state.layers[layerId];
+    if (!layer) return null;
+
+    const clipId = crypto.randomUUID();
+
+    const clip: Clip = {
+      ...clipToAdd,
+      id: clipId,
+      layerId,
+    };
+
     set((state) => {
-      const layer = state.layers[layerId];
-      if (!layer) return state;
+      const currentLayer = state.layers[layerId];
+      if (!currentLayer) return state;
 
-      const nextClip = clip.layerId === layerId ? clip : { ...clip, layerId };
-      const nextClipIds = layer.clipIds.includes(nextClip.id)
-        ? layer.clipIds
-        : [...layer.clipIds, nextClip.id];
+      const nextClipIds = [...currentLayer.clipIds, clipId];
 
       return {
         clips: {
           ...state.clips,
-          [nextClip.id]: nextClip,
+          [clipId]: clip,
         },
         layers: {
           ...state.layers,
           [layerId]: {
-            ...layer,
+            ...currentLayer,
             clipIds: nextClipIds,
           },
         },
       };
-    }),
+    });
+
+    return clipId;
+  },
 
   updateClip: (clipId, patch) =>
     set((state) => {

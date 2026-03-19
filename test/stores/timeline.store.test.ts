@@ -1,4 +1,4 @@
-import { describe, it, beforeEach, expect } from "vitest";
+import { describe, it, beforeEach, expect, assert } from "vitest";
 import { useTimelineStore } from "../../src/stores/timeline/store";
 import type {
   TimelineStoreItems,
@@ -71,18 +71,15 @@ describe("Timeline Store Tests", () => {
   });
 
   it("should add a layer to the timeline", () => {
-    const layerId = "3";
     const timelineId = "timeline-1";
-    const layer = {
-      id: layerId,
-      timelineId: "timeline-1",
+    const layerId = useTimelineStore.getState().addLayer(timelineId, {
       type: "video" as ValidAssetType,
       name: "Layer 1",
       clipIds: [],
-    };
-
-    useTimelineStore.getState().addLayer(timelineId, layer);
-
+    });
+    expect(layerId).not.toBeNull();
+    // for type checker
+    assert(layerId);
     const state = useTimelineStore.getState();
     expect(state.layers[layerId]).toBeDefined();
     expect(state.layers[layerId].name).toBe("Layer 1");
@@ -91,21 +88,19 @@ describe("Timeline Store Tests", () => {
   });
 
   it("should add a clip to the target layer", () => {
-    const clipId = "clip-2";
     const layerId = "layer-2";
-    const clip = {
-      id: clipId,
-      layerId,
+    const clipId = useTimelineStore.getState().addClip(layerId, {
       assetId: "asset-2",
       kind: "audio" as ValidAssetType,
       startFrame: 30,
       durationInFrames: 90,
-    };
-
-    useTimelineStore.getState().addClip(layerId, clip);
-
+    });
+    expect(clipId).not.toBeNull();
+    // for type checker
+    assert(clipId);
     const state = useTimelineStore.getState();
-    expect(state.clips[clipId]).toEqual(clip);
+    expect(state.clips[clipId].id).toBe(clipId);
+    expect(state.clips[clipId].layerId).toBe(layerId);
     expect(state.layers[layerId].clipIds).toContain(clipId);
   });
 

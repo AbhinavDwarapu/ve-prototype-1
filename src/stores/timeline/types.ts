@@ -45,9 +45,15 @@ export type TimelineStoreItems = {
 };
 
 export type TimelineStoreActions = {
-  addLayer: (timelineId: ID, layer: Layer) => void;
-  addClip: (layerId: ID, clip: Clip) => void;
-  updateClip: (clipId: ID, patch: Partial<Clip>) => void;
+  addLayer: (
+    timelineId: ID,
+    layer: Omit<Layer, "id" | "timelineId">,
+  ) => ID | null;
+  addClip: (
+    layerId: ID,
+    clip: Omit<Clip, "id" | "layerId">,
+  ) => ID | null;
+  updateClip: (clipId: ID, patch: Partial<Omit<Clip, "id">>) => void;
   deleteClip: (clipId: ID) => void;
   selectClips: (clipIds: ID[]) => void;
 };
