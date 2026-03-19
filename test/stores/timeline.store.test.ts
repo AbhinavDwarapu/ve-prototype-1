@@ -125,11 +125,13 @@ describe("Timeline Store Tests", () => {
   });
 
   it("should delete a clip and remove it from layer clipIds", () => {
+    useTimelineStore.getState().selectClips(["clip-1", "clip-2"]);
     useTimelineStore.getState().deleteClip("clip-1");
 
     const state = useTimelineStore.getState();
     expect(state.clips["clip-1"]).toBeUndefined();
     expect(state.layers["layer-1"].clipIds).not.toContain("clip-1");
+    expect(state.selectedClipIds).toEqual(["clip-2"]);
   });
 
   it("should select clips", () => {

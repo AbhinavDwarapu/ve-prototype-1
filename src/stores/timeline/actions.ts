@@ -135,8 +135,17 @@ export const createTimelineActions = (
       const nextClips = { ...state.clips };
       delete nextClips[clipId];
 
+      const nextSelectedClipIds = state.selectedClipIds.filter(
+        (id) => id !== clipId,
+      );
+
       const layer = state.layers[clip.layerId];
-      if (!layer) return { clips: nextClips };
+      if (!layer) {
+        return {
+          clips: nextClips,
+          selectedClipIds: nextSelectedClipIds,
+        };
+      }
 
       return {
         clips: nextClips,
@@ -147,6 +156,7 @@ export const createTimelineActions = (
             clipIds: layer.clipIds.filter((id) => id !== clipId),
           },
         },
+        selectedClipIds: nextSelectedClipIds,
       };
     }),
 
