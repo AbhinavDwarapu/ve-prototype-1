@@ -13,17 +13,16 @@ export default function Controls() {
 }
 
 function PlayButton() {
-  const player = useRemotionPlayerStore((state) => state.player);
   const isPlaying = useRemotionPlayerStore((state) => state.isPlaying);
-
-  if (!player) return <div>No player</div>;
+  const play = useRemotionPlayerStore((state) => state.play);
+  const pause = useRemotionPlayerStore((state) => state.pause);
 
   return (
     <Button
       variant="outline"
       size="icon"
       className={"rounded-full"}
-      onClick={() => (isPlaying ? player.pause() : player.play())}
+      onClick={() => (isPlaying ? pause() : play())}
     >
       {isPlaying ? <Pause /> : <Play />}
     </Button>
@@ -32,7 +31,12 @@ function PlayButton() {
 
 function RewindButton() {
   return (
-    <Button variant="outline" size="icon" className={"rounded-full"}>
+    <Button
+      aria-label="Rewind"
+      variant="outline"
+      size="icon"
+      className={"rounded-full"}
+    >
       <Rewind />
     </Button>
   );
@@ -40,7 +44,12 @@ function RewindButton() {
 
 function FastForwardButton() {
   return (
-    <Button variant="outline" size="icon" className={"rounded-full"}>
+    <Button
+      aria-label="Fast forward"
+      variant="outline"
+      size="icon"
+      className={"rounded-full"}
+    >
       <FastForward />
     </Button>
   );
