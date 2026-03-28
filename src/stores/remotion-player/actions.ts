@@ -46,8 +46,7 @@ export const createRemotionPlayerActions = (
         player.removeEventListener("ended", sync);
       };
 
-      set({ player });
-      sync();
+      set({ player, isPlaying: player.isPlaying() });
     },
 
     play: () => {
