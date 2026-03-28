@@ -9,6 +9,8 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "test": "vitest",
+    "test:unit": "vitest --project unit",
+    "test:storybook": "vitest --project storybook",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build"
   },
