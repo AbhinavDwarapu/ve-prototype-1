@@ -5,14 +5,32 @@ import { useRemotionPlayerStore } from "@/stores/remotion-player/store";
 import { useEffect } from "react";
 import type { PlayerRef } from "@remotion/player";
 
-function createMockPlayer(overrides: Partial<PlayerRef> = {}): PlayerRef {
+type EventName = "play" | "pause" | "ended";
+
+function createMockPlayer({ initiallyPlaying = false } = {}): PlayerRef {
+  const listeners = new Map<EventName, Set<() => void>>();
+  let playing = initiallyPlaying;
+
+  const emit = (event: EventName) => {
+    listeners.get(event)?.forEach((fn) => fn());
+  };
+
   return {
-    play: () => {},
-    pause: () => {},
-    toggle: () => {},
+    play: () => {
+      playing = true;
+      emit("play");
+    },
+    pause: () => {
+      playing = false;
+      emit("pause");
+    },
+    toggle: () => {
+      playing ? emit("pause") : emit("play");
+      playing = !playing;
+    },
     seekTo: () => {},
     getCurrentFrame: () => 0,
-    isPlaying: () => false,
+    isPlaying: () => playing,
     getContainerNode: () => null,
     isMuted: () => false,
     getVolume: () => 1,
@@ -20,27 +38,33 @@ function createMockPlayer(overrides: Partial<PlayerRef> = {}): PlayerRef {
     requestFullscreen: () => {},
     exitFullscreen: () => {},
     getScale: () => 1,
-    addEventListener: () => {},
-    removeEventListener: () => {},
-    ...overrides,
+    addEventListener: (event: EventName, fn: () => void) => {
+      if (!listeners.has(event)) listeners.set(event, new Set());
+      listeners.get(event)!.add(fn);
+    },
+    removeEventListener: (event: EventName, fn: () => void) => {
+      listeners.get(event)?.delete(fn);
+    },
   } as unknown as PlayerRef;
 }
 
 const withNoPlayer: Decorator = (Story) => {
   useEffect(() => {
-    useRemotionPlayerStore.setState({ player: null, isPlaying: false });
+    const { setPlayer } = useRemotionPlayerStore.getState();
+    setPlayer(null);
+    return () => {
+      useRemotionPlayerStore.getState().setPlayer(null);
+    };
   }, []);
   return <Story />;
 };
 
 const withPlayerPaused: Decorator = (Story) => {
   useEffect(() => {
-    useRemotionPlayerStore.setState({
-      player: createMockPlayer(),
-      isPlaying: false,
-    });
+    const { setPlayer } = useRemotionPlayerStore.getState();
+    setPlayer(createMockPlayer());
     return () => {
-      useRemotionPlayerStore.setState({ player: null, isPlaying: false });
+      useRemotionPlayerStore.getState().setPlayer(null);
     };
   }, []);
   return <Story />;
@@ -48,12 +72,10 @@ const withPlayerPaused: Decorator = (Story) => {
 
 const withPlayerPlaying: Decorator = (Story) => {
   useEffect(() => {
-    useRemotionPlayerStore.setState({
-      player: createMockPlayer({ isPlaying: () => true }),
-      isPlaying: true,
-    });
+    const { setPlayer } = useRemotionPlayerStore.getState();
+    setPlayer(createMockPlayer({ initiallyPlaying: true }));
     return () => {
-      useRemotionPlayerStore.setState({ player: null, isPlaying: false });
+      useRemotionPlayerStore.getState().setPlayer(null);
     };
   }, []);
   return <Story />;
