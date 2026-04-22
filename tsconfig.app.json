@@ -10,7 +10,8 @@
 
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "timeline-as-library": ["./src/features/timeline/index.ts"]
     },
 
     /* Bundler mode */

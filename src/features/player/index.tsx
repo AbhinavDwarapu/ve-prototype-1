@@ -16,11 +16,11 @@ export default function PlayerPage() {
   );
 
   return (
-    <div className="flex flex-col items-center justify-center aspect-video w-full">
+    <div className="flex flex-col items-center justify-center aspect-video ">
       <Player
         component={MyComposition}
-        durationInFrames={60}
-        fps={30}
+        durationInFrames={60 * 60}
+        fps={60}
         compositionWidth={1280 / 2}
         compositionHeight={720 / 2}
         ref={playerRef}
