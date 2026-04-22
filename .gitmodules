@@ -1,0 +1,3 @@
+[submodule "src/features/timeline"]
+	path = src/features/timeline
+	url = git@github.com:AbhinavDwarapu/timeline-as-library.git
