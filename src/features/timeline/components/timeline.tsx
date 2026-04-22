@@ -39,11 +39,6 @@ export type TimelineWrapperProps = Partial<
   initialClips?: Clip[];
 };
 
-/**
- * Application-level Timeline. Wraps the read-only `timeline-as-library`
- * submodule with default styling and wires the component into the Remotion
- * player store so consumers only need to render `<Timeline />`.
- */
 export default function TimelineComponent({
   number_of_layers = 3,
   pixelsPerSecond = 80,

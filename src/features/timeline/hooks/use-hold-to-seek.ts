@@ -86,7 +86,14 @@ export const useHoldToSeek = ({
   const onPointerDown = useCallback(
     (event: ReactPointerEvent<HTMLButtonElement>) => {
       if (event.button !== 0) return;
-      event.currentTarget.setPointerCapture(event.pointerId);
+      try {
+        event.currentTarget.setPointerCapture(event.pointerId);
+      } catch {
+        // setPointerCapture can throw if the pointer is no longer active by
+        // the time the handler runs (e.g. fast release, cross-frame pointer,
+        // synthetic test events). Capture is an optimization; the scrub still
+        // works via the pointerup/cancel handlers on the same element.
+      }
       activePointerRef.current = event.pointerId;
       pressStartRef.current = performance.now();
       lastTimestampRef.current = pressStartRef.current;
