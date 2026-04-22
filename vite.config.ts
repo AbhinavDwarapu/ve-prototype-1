@@ -16,7 +16,7 @@ export default defineConfig({
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
-      "timeline-as-library": path.resolve(__dirname, "./src/features/timeline/index.ts")
+      "timeline-as-library": path.resolve(__dirname, "./libs/timeline/index.ts")
     }
   },
   plugins: [react(), tailwindcss(), babel({

@@ -11,7 +11,7 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"],
-      "timeline-as-library": ["./src/features/timeline/index.ts"]
+      "timeline-as-library": ["./libs/timeline/index.ts"]
     },
 
     /* Bundler mode */
