@@ -11,6 +11,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.SUBMODULES_PAT || github.token }}
+          submodules: recursive
       - name: Setup Bun
         uses: oven-sh/setup-bun@v2
       - run: bun install
@@ -21,6 +24,9 @@ jobs:
     needs: build
     steps:
       - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.SUBMODULES_PAT || github.token }}
+          submodules: recursive
       - name: Setup Bun
         uses: oven-sh/setup-bun@v2
       - run: bun install
@@ -31,6 +37,9 @@ jobs:
     needs: build
     steps:
       - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.SUBMODULES_PAT || github.token }}
+          submodules: recursive
       - name: Setup Bun
         uses: oven-sh/setup-bun@v2
       - run: bun install
