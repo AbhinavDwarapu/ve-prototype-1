@@ -1,5 +1,7 @@
+import type { Clip as LibraryClip } from "timeline-as-library";
+
 export type ID = string;
-export type ValidAssetType = "video" | "audio" | "element";
+export type ValidAssetType = "video" | "audio" | "image" | "element";
 
 export type Asset = {
   id: ID;
@@ -8,13 +10,9 @@ export type Asset = {
   src: string;
 };
 
-export type Clip = {
-  id: ID;
-  layerId: ID;
+export type Clip = LibraryClip & {
   assetId: ID;
   kind: ValidAssetType;
-  startFrame: number;
-  durationInFrames: number;
 };
 
 export type Layer = {
@@ -49,10 +47,7 @@ export type TimelineStoreActions = {
     timelineId: ID,
     layer: Omit<Layer, "id" | "timelineId">,
   ) => ID | null;
-  addClip: (
-    layerId: ID,
-    clip: Omit<Clip, "id" | "layerId">,
-  ) => ID | null;
+  addClip: (layerId: ID, clip: Omit<Clip, "id" | "layerId">) => ID | null;
   updateClip: (clipId: ID, patch: Partial<Omit<Clip, "id">>) => void;
   deleteClip: (clipId: ID) => void;
   selectClips: (clipIds: ID[]) => void;
