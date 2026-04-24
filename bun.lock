@@ -20,7 +20,7 @@
         "shadcn": "^4.0.8",
         "tailwind-merge": "^3.5.0",
         "tailwindcss": "^4.2.2",
-        "timeline-as-library": "file:src/features/timeline",
+        "timeline-as-library": "file:libs/timeline",
         "tw-animate-css": "^1.4.0",
         "zod": "^4.3.6",
         "zustand": "^5.0.12",
@@ -707,7 +707,7 @@
 
     "buffer-from": ["buffer-from@1.1.2", "", {}, "sha512-E+XQCRwSbaaiChtv6k6Dwgc+bx+Bs6vuKJHHl5kox/BaKbhiXzqQOwK4cO22yElGp2OCmjwVhT3HmxgyPGnJfQ=="],
 
-    "bun-types": ["bun-types@1.3.12", "", { "dependencies": { "@types/node": "*" } }, "sha512-HqOLj5PoFajAQciOMRiIZGNoKxDJSr6qigAttOX40vJuSp6DN/CxWp9s3C1Xwm4oH7ybueITwiaOcWXoYVoRkA=="],
+    "bun-types": ["bun-types@1.3.13", "", { "dependencies": { "@types/node": "*" } }, "sha512-QXKeHLlOLqQX9LgYaHJfzdBaV21T63HhFJnvuRCcjZiaUDpbs5ED1MgxbMra71CsryN/1dAoXuJJJwIv/2drVA=="],
 
     "bundle-name": ["bundle-name@4.1.0", "", { "dependencies": { "run-applescript": "^7.0.0" } }, "sha512-tjwM5exMg6BGRI+kNmTntNsvdZS1X8BFYS6tnJ2hdH0kVxM6/eVZ2xy+FqStSWvYmtfFMDLIxurorHwDKfDz5Q=="],
 
@@ -1487,7 +1487,7 @@
 
     "terser-webpack-plugin": ["terser-webpack-plugin@5.4.0", "", { "dependencies": { "@jridgewell/trace-mapping": "^0.3.25", "jest-worker": "^27.4.5", "schema-utils": "^4.3.0", "terser": "^5.31.1" }, "peerDependencies": { "webpack": "^5.1.0" } }, "sha512-Bn5vxm48flOIfkdl5CaD2+1CiUVbonWQ3KQPyP7/EuIl9Gbzq/gQFOzaMFUEgVjB1396tcK0SG8XcNJ/2kDH8g=="],
 
-    "timeline-as-library": ["timeline-as-library@file:src/features/timeline", { "devDependencies": { "@chromatic-com/storybook": "^5.1.2", "@storybook/addon-a11y": "^10.3.5", "@storybook/addon-docs": "^10.3.5", "@storybook/addon-vitest": "^10.3.5", "@storybook/react-vite": "^10.3.5", "@tailwindcss/vite": "^4.2.2", "@testing-library/react": "^16.3.2", "@testing-library/user-event": "^14.6.1", "@types/bun": "latest", "@types/react": "^19.2.14", "@types/react-dom": "^19.2.3", "@vitejs/plugin-react": "^6.0.0", "@vitest/browser-playwright": "^4.1.5", "@vitest/coverage-v8": "^4.1.5", "playwright": "^1.59.1", "react": "^19.2.4", "react-dom": "^19.2.4", "react-moveable": "^0.56.0", "storybook": "^10.3.5", "tailwindcss": "^4.2.2", "typescript": "^5", "vite": "^8.0.3", "vite-plugin-dts": "^4.5.3", "vitest": "^4.1.5" }, "peerDependencies": { "react": "^18.0.0 || ^19.0.0", "react-dom": "^18.0.0 || ^19.0.0", "react-moveable": "^0.56.0" } }],
+    "timeline-as-library": ["timeline-as-library@file:libs/timeline", { "devDependencies": { "@chromatic-com/storybook": "^5.1.2", "@storybook/addon-a11y": "^10.3.5", "@storybook/addon-docs": "^10.3.5", "@storybook/addon-vitest": "^10.3.5", "@storybook/react-vite": "^10.3.5", "@tailwindcss/vite": "^4.2.2", "@testing-library/react": "^16.3.2", "@testing-library/user-event": "^14.6.1", "@types/bun": "latest", "@types/react": "^19.2.14", "@types/react-dom": "^19.2.3", "@vitejs/plugin-react": "^6.0.0", "@vitest/browser-playwright": "^4.1.5", "@vitest/coverage-v8": "^4.1.5", "playwright": "^1.59.1", "react": "^19.2.4", "react-dom": "^19.2.4", "react-moveable": "^0.56.0", "storybook": "^10.3.5", "tailwindcss": "^4.2.2", "typescript": "^5", "vite": "^8.0.3", "vite-plugin-dts": "^4.5.3", "vitest": "^4.1.5" }, "peerDependencies": { "react": "^18.0.0 || ^19.0.0", "react-dom": "^18.0.0 || ^19.0.0", "react-moveable": "^0.56.0" } }],
 
     "tiny-invariant": ["tiny-invariant@1.3.3", "", {}, "sha512-+FbBPE1o9QAYvviau/qC5SE3caw21q3xkvWKBtja5vgqOWIHHJ3ioaq1VPfn/Szqctz2bU/oYeKd9/z5BL+PVg=="],
 
