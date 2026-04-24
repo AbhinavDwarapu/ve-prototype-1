@@ -40,10 +40,10 @@ const initialState: TimelineStoreItems = {
     "clip-1": {
       id: "clip-1",
       layerId: "layer-1",
+      startPx: 0,
+      widthPx: 200,
       assetId: "asset-1",
       kind: "video",
-      startFrame: 0,
-      durationInFrames: 120,
     },
   },
   timelines: {
@@ -90,10 +90,10 @@ describe("Timeline Store Tests", () => {
   it("should add a clip to the target layer", () => {
     const layerId = "layer-2";
     const clipId = useTimelineStore.getState().addClip(layerId, {
+      startPx: 0,
+      widthPx: 100,
       assetId: "asset-2",
       kind: "audio" as ValidAssetType,
-      startFrame: 30,
-      durationInFrames: 90,
     });
     expect(clipId).not.toBeNull();
     // for type checker
@@ -107,11 +107,11 @@ describe("Timeline Store Tests", () => {
   it("should update clip fields in place", () => {
     useTimelineStore
       .getState()
-      .updateClip("clip-1", { startFrame: 45, durationInFrames: 180 });
+      .updateClip("clip-1", { startPx: 45, widthPx: 180 });
 
     const state = useTimelineStore.getState();
-    expect(state.clips["clip-1"].startFrame).toBe(45);
-    expect(state.clips["clip-1"].durationInFrames).toBe(180);
+    expect(state.clips["clip-1"].startPx).toBe(45);
+    expect(state.clips["clip-1"].widthPx).toBe(180);
     expect(state.layers["layer-1"].clipIds).toContain("clip-1");
   });
 
