@@ -2,6 +2,7 @@ import { useState } from "react";
 import {
   Timeline as LibraryTimeline,
   type Clip,
+  type LayerMap,
   type TimelineClassNames,
   type TimelineProps,
 } from "timeline-as-library";
@@ -15,6 +16,12 @@ const DEFAULT_CLIPS: Clip[] = [
   { id: "clip-1", layerId: "1", startPx: 0, widthPx: 140 },
   { id: "clip-2", layerId: "2", startPx: 170, widthPx: 120 },
 ];
+
+const DEFAULT_LAYERS: LayerMap = {
+  "1": { id: "1", clipIds: ["clip-1"] },
+  "2": { id: "2", clipIds: ["clip-2"] },
+  "3": { id: "3", clipIds: [] },
+};
 
 const DEFAULT_CLASS_NAMES: TimelineClassNames = {
   root: "relative overflow-x-auto overflow-y-hidden rounded-sm bg-neutral-900 shadow-lg demo-timeline",
@@ -31,22 +38,21 @@ const DEFAULT_CLASS_NAMES: TimelineClassNames = {
 };
 
 export type TimelineWrapperProps = Partial<
-  Pick<
-    TimelineProps,
-    "number_of_layers" | "pixelsPerSecond" | "durationSec" | "classNames"
-  >
+  Pick<TimelineProps, "pixelsPerSecond" | "durationSec" | "classNames">
 > & {
   initialClips?: Clip[];
+  initialLayers?: LayerMap;
 };
 
 export default function TimelineComponent({
-  number_of_layers = 3,
   pixelsPerSecond = 80,
   durationSec = 60,
   classNames,
   initialClips = DEFAULT_CLIPS,
+  initialLayers = DEFAULT_LAYERS,
 }: TimelineWrapperProps = {}) {
   const [clips, setClips] = useState<Clip[]>(initialClips);
+  const [layers, setLayers] = useState<LayerMap>(initialLayers);
 
   const player = useRemotionPlayerStore((s) => s.player);
   const seekTo = useRemotionPlayerStore((s) => s.seekTo);
@@ -55,7 +61,8 @@ export default function TimelineComponent({
 
   return (
     <LibraryTimeline
-      number_of_layers={number_of_layers}
+      layers={layers}
+      setLayers={setLayers}
       clips={clips}
       setClips={setClips}
       pixelsPerSecond={pixelsPerSecond}
