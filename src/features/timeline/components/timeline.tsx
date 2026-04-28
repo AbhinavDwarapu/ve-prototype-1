@@ -1,27 +1,23 @@
-import { useState } from "react";
+import { useMemo } from "react";
 import {
   Timeline as LibraryTimeline,
-  type Clip,
   type LayerMap,
   type TimelineClassNames,
   type TimelineProps,
 } from "timeline-as-library";
 import { useCurrentPlayerFrame } from "@/remotion/hooks/use-current-player-frame";
+import {
+  COMPOSITION_DURATION_SEC,
+  COMPOSITION_FPS,
+  PX_PER_SECOND,
+} from "@/remotion/utils";
 import { useRemotionPlayerStore } from "@/stores/remotion-player/store";
+import { useTimelineStore } from "@/stores/timeline/store";
+import type {
+  Clip as StoreClip,
+  Layer as StoreLayer,
+} from "@/stores/timeline/types";
 import "../styles.css";
-
-const FPS = 60;
-
-const DEFAULT_CLIPS: Clip[] = [
-  { id: "clip-1", layerId: "1", startPx: 0, widthPx: 140 },
-  { id: "clip-2", layerId: "2", startPx: 170, widthPx: 120 },
-];
-
-const DEFAULT_LAYERS: LayerMap = {
-  "1": { id: "1", clipIds: ["clip-1"] },
-  "2": { id: "2", clipIds: ["clip-2"] },
-  "3": { id: "3", clipIds: [] },
-};
 
 const DEFAULT_CLASS_NAMES: TimelineClassNames = {
   root: "relative overflow-x-auto overflow-y-hidden rounded-sm bg-neutral-900 shadow-lg demo-timeline",
@@ -38,37 +34,76 @@ const DEFAULT_CLASS_NAMES: TimelineClassNames = {
 };
 
 export type TimelineWrapperProps = Partial<
-  Pick<TimelineProps, "pixelsPerSecond" | "durationSec" | "classNames">
-> & {
-  initialClips?: Clip[];
-  initialLayers?: LayerMap;
-};
+  Pick<
+    TimelineProps,
+    "pixelsPerSecond" | "durationSec" | "classNames" | "options"
+  >
+>;
 
 export default function TimelineComponent({
-  pixelsPerSecond = 80,
-  durationSec = 60,
+  pixelsPerSecond = PX_PER_SECOND,
+  durationSec = COMPOSITION_DURATION_SEC,
+  options,
   classNames,
-  initialClips = DEFAULT_CLIPS,
-  initialLayers = DEFAULT_LAYERS,
 }: TimelineWrapperProps = {}) {
-  const [clips, setClips] = useState<Clip[]>(initialClips);
-  const [layers, setLayers] = useState<LayerMap>(initialLayers);
-
   const player = useRemotionPlayerStore((s) => s.player);
   const seekTo = useRemotionPlayerStore((s) => s.seekTo);
   const currentFrame = useCurrentPlayerFrame(player);
-  const currentTimeSec = currentFrame / FPS;
+  const currentTimeSec = currentFrame / COMPOSITION_FPS;
+
+  const currentTimelineId = useTimelineStore((s) => s.currentTimelineId);
+  const timelines = useTimelineStore((s) => s.timelines);
+  const storeLayers = useTimelineStore((s) => s.layers);
+  const storeClips = useTimelineStore((s) => s.clips);
+  const updateClip = useTimelineStore((s) => s.updateClip);
+
+  const timeline = currentTimelineId ? timelines[currentTimelineId] : null;
+
+  const visibleLayers = useMemo<LayerMap<StoreLayer>>(() => {
+    if (!timeline) return {};
+
+    return Object.fromEntries(
+      timeline.layerIds.flatMap((layerId) => {
+        const layer = storeLayers[layerId];
+        return layer ? [[layerId, layer]] : [];
+      }),
+    );
+  }, [storeLayers, timeline]);
+
+  const visibleClips = useMemo<StoreClip[]>(() => {
+    if (!timeline) return [];
+
+    return timeline.layerIds.flatMap((layerId) => {
+      const layer = storeLayers[layerId];
+      if (!layer) return [];
+      return layer.clipIds.flatMap((clipId) => {
+        const clip = storeClips[clipId];
+        return clip ? [clip] : [];
+      });
+    });
+  }, [storeClips, storeLayers, timeline]);
 
   return (
     <LibraryTimeline
-      layers={layers}
-      setLayers={setLayers}
-      clips={clips}
-      setClips={setClips}
+      layers={visibleLayers}
+      clips={visibleClips}
       pixelsPerSecond={pixelsPerSecond}
       durationSec={durationSec}
+      options={options}
       currentTimeSec={currentTimeSec}
-      onSeek={(timeSec) => seekTo(Math.round(timeSec * FPS))}
+      onSeek={(timeSec) => seekTo(Math.round(timeSec * COMPOSITION_FPS))}
+      onMove={(clip, result) =>
+        updateClip(clip.id, {
+          startPx: result.startPx,
+          layerId: result.layerId,
+        })
+      }
+      onResize={(clip, result) =>
+        updateClip(clip.id, {
+          startPx: result.startPx,
+          widthPx: result.widthPx,
+        })
+      }
       classNames={{ ...DEFAULT_CLASS_NAMES, ...classNames }}
     />
   );

@@ -3,6 +3,10 @@
 import { Player, type PlayerRef } from "@remotion/player";
 import { useCallback } from "react";
 import { MyComposition } from "../../remotion/Composition";
+import {
+  COMPOSITION_DURATION_FRAMES,
+  COMPOSITION_FPS,
+} from "@/remotion/utils";
 import { useRemotionPlayerStore } from "@/stores/remotion-player/store";
 
 export default function PlayerPage() {
@@ -19,8 +23,8 @@ export default function PlayerPage() {
     <div className="flex flex-col items-center justify-center aspect-video ">
       <Player
         component={MyComposition}
-        durationInFrames={60 * 60}
-        fps={60}
+        durationInFrames={COMPOSITION_DURATION_FRAMES}
+        fps={COMPOSITION_FPS}
         compositionWidth={1280 / 2}
         compositionHeight={720 / 2}
         ref={playerRef}
