@@ -2,6 +2,10 @@ import type { RefObject } from "react";
 
 /** Pixels per second at scale 1, used for time ↔ horizontal position conversions. */
 export const PX_PER_SECOND = 100;
+export const COMPOSITION_FPS = 60;
+export const COMPOSITION_DURATION_SEC = 60;
+export const COMPOSITION_DURATION_FRAMES =
+  COMPOSITION_FPS * COMPOSITION_DURATION_SEC;
 
 /** Thresholds and speeds for horizontal auto-scroll while scrubbing near container edges. */
 export const SCRUB_CONFIG = {

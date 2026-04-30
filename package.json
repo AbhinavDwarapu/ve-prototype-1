@@ -17,6 +17,7 @@
   "dependencies": {
     "@base-ui/react": "^1.3.0",
     "@remotion/cli": "4.0.441",
+    "@remotion/media": "4.0.441",
     "@remotion/player": "4.0.441",
     "@storybook/react-vite": "^10.3.3",
     "@tailwindcss/vite": "^4.2.2",
