@@ -1,4 +1,4 @@
-import { useLayoutEffect } from "react";
+import { useEffect } from "react";
 import "./App.css";
 import PlayerPage from "./features/player";
 import Timeline from "./features/timeline";
@@ -97,8 +97,12 @@ function seedTestTimelineStore() {
 }
 
 function App() {
-  useLayoutEffect(() => {
-    seedTestTimelineStore();
+  useEffect(() => {
+    const isLocalhost = window.location.hostname === "localhost";
+
+    if (isLocalhost) {
+      seedTestTimelineStore();
+    }
   }, []);
 
   return (
