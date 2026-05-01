@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import "./App.css";
+import FileFolderSidebar from "./features/file-folder";
 import PlayerPage from "./features/player";
 import Timeline from "./features/timeline";
 import { useTimelineStore } from "@/stores/timeline/store";
@@ -106,7 +107,8 @@ function App() {
   }, []);
 
   return (
-    <main className="flex flex-col items-center w-full h-screen p-2">
+    <main className="relative flex h-screen w-full flex-col items-center p-2">
+      <FileFolderSidebar />
       <PlayerPage />
       <Timeline />
     </main>
