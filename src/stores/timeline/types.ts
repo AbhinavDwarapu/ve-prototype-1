@@ -43,6 +43,7 @@ export type TimelineStoreItems = {
 };
 
 export type TimelineStoreActions = {
+  addAsset: (asset: Omit<Asset, "id">) => ID;
   addLayer: (
     timelineId: ID,
     layer: Omit<Layer, "id" | "timelineId">,

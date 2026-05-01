@@ -1,4 +1,10 @@
-import type { TimelineStore, Clip, Layer, TimelineStoreActions } from "./types";
+import type {
+  TimelineStore,
+  Asset,
+  Clip,
+  Layer,
+  TimelineStoreActions,
+} from "./types";
 import type { StoreApi } from "zustand";
 
 type SetState = StoreApi<TimelineStore>["setState"];
@@ -8,6 +14,23 @@ export const createTimelineActions = (
   set: SetState,
   get: GetState,
 ): TimelineStoreActions => ({
+  addAsset: (assetInput) => {
+    const assetId = crypto.randomUUID();
+    const asset: Asset = {
+      ...assetInput,
+      id: assetId,
+    };
+
+    set((state) => ({
+      assets: {
+        ...state.assets,
+        [assetId]: asset,
+      },
+    }));
+
+    return assetId;
+  },
+
   addLayer: (timelineId, layerInput) => {
     const state = get();
     const timeline = state.timelines[timelineId];
