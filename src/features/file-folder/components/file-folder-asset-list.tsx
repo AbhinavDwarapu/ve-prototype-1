@@ -1,4 +1,4 @@
-import { FolderOpen, Upload } from "lucide-react";
+import { RefreshCw, Upload } from "lucide-react";
 import { Button } from "@/shared/components/ui/button";
 import type { FileFolderAsset, StorageEstimate } from "../types";
 import { formatRemainingStorage } from "../utils";
@@ -9,7 +9,7 @@ export type FileFolderAssetListProps = {
   isLoading: boolean;
   selectedAssetId: string | null;
   storageEstimate: StorageEstimate | null;
-  onOpenProjectFolder: () => void;
+  onRefreshProjectFolder: () => void;
   onSelectAsset: (assetId: string) => void;
   onUploadFiles: () => void;
 };
@@ -19,7 +19,7 @@ export function FileFolderAssetList({
   isLoading,
   selectedAssetId,
   storageEstimate,
-  onOpenProjectFolder,
+  onRefreshProjectFolder,
   onSelectAsset,
   onUploadFiles,
 }: FileFolderAssetListProps) {
@@ -42,10 +42,10 @@ export function FileFolderAssetList({
           variant="outline"
           size="sm"
           disabled={isLoading}
-          onClick={actionIsProjectFolder ? onOpenProjectFolder : onUploadFiles}
+          onClick={actionIsProjectFolder ? onRefreshProjectFolder : onUploadFiles}
         >
-          {actionIsProjectFolder ? <FolderOpen /> : <Upload />}
-          {actionIsProjectFolder ? "Open" : "Upload"}
+          {actionIsProjectFolder ? <RefreshCw /> : <Upload />}
+          {actionIsProjectFolder ? "Refresh" : "Upload"}
         </Button>
       </div>
 

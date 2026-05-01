@@ -4,6 +4,7 @@ import {
   getStorageEstimate,
   importFilesToOpfs,
   loadPersistedAssets,
+  refreshProjectFolderAssets,
   revokeAssetUrls,
 } from "../storage";
 import type { FileFolderAsset, StorageEstimate } from "../types";
@@ -94,6 +95,28 @@ export function useFileFolderAssets() {
     }
   }, [refreshStorageEstimate]);
 
+  const refreshProjectFolder = useCallback(async () => {
+    setIsLoading(true);
+    setError(null);
+
+    try {
+      const nextAssets = await refreshProjectFolderAssets();
+      setAssets((currentAssets) => {
+        revokeAssetUrls(currentAssets);
+        return nextAssets;
+      });
+      await refreshStorageEstimate();
+      return true;
+    } catch (refreshError) {
+      setError(
+        getErrorMessage(refreshError, "Unable to refresh project folder."),
+      );
+      return false;
+    } finally {
+      setIsLoading(false);
+    }
+  }, [refreshStorageEstimate]);
+
   const uploadFiles = useCallback(
     async (files: FileList | File[] | null) => {
       const filesToUpload = files ? [...files] : [];
@@ -124,6 +147,7 @@ export function useFileFolderAssets() {
     error,
     isLoading,
     openProjectFolder,
+    refreshProjectFolder,
     storageEstimate,
     uploadFiles,
   };

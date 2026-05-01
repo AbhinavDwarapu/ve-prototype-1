@@ -28,6 +28,7 @@ export default function FileFolderSidebar() {
     error,
     isLoading,
     openProjectFolder,
+    refreshProjectFolder,
     storageEstimate,
     uploadFiles,
   } = useFileFolderAssets();
@@ -52,6 +53,13 @@ export default function FileFolderSidebar() {
   async function handleFilesSelected(files: FileList | null) {
     await uploadFiles(files);
     if (inputRef.current) inputRef.current.value = "";
+  }
+
+  async function handleRefreshProjectFolder() {
+    const refreshed = await refreshProjectFolder();
+    if (refreshed) {
+      setSelectedAssetId(null);
+    }
   }
 
   function handleAddSelectedAsset() {
@@ -101,7 +109,7 @@ export default function FileFolderSidebar() {
             isLoading={isLoading}
             selectedAssetId={selectedAssetId}
             storageEstimate={storageEstimate}
-            onOpenProjectFolder={handleOpenProjectFolder}
+            onRefreshProjectFolder={handleRefreshProjectFolder}
             onSelectAsset={setSelectedAssetId}
             onUploadFiles={() => inputRef.current?.click()}
           />

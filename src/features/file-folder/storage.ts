@@ -7,4 +7,5 @@ export {
 export {
   canOpenProjectFolder,
   chooseProjectFolder,
+  refreshProjectFolderAssets,
 } from "./storage/project-folder";
