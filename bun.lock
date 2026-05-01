@@ -9,6 +9,7 @@
         "@remotion/cli": "4.0.441",
         "@remotion/media": "4.0.441",
         "@remotion/player": "4.0.441",
+        "@remotion/preload": "^4.0.455",
         "@storybook/react-vite": "^10.3.3",
         "@tailwindcss/vite": "^4.2.2",
         "class-variance-authority": "^0.7.1",
@@ -347,6 +348,8 @@
     "@remotion/media-utils": ["@remotion/media-utils@4.0.441", "", { "dependencies": { "mediabunny": "1.39.2", "remotion": "4.0.441" }, "peerDependencies": { "react": ">=16.8.0", "react-dom": ">=16.8.0" } }, "sha512-Cdtozo+6jM2gN3tvZufeIZUzG1A06g5IUqYjwTMa2o9JQk3BzP3INzGluMdrN70id2icEPkO4JjmBt1XB/mFfg=="],
 
     "@remotion/player": ["@remotion/player@4.0.441", "", { "dependencies": { "remotion": "4.0.441" }, "peerDependencies": { "react": ">=16.8.0", "react-dom": ">=16.8.0" } }, "sha512-5u9rjMrC5Tkrjlii+5CvH98SIj5uiol3zrhJzjHdfcoF4ew3ejy0ieXKwaVE16Uj0iN0XQR/UF+Xe/Sps2mj5g=="],
+
+    "@remotion/preload": ["@remotion/preload@4.0.455", "", {}, "sha512-cN0pGV5y6vx8noWxK9pGpAIMtOzmBGiVHGC155C7Dc4Bps6jBdSOixjA73iSO4iqgYPmU2bB/QVzETEJSTEvbQ=="],
 
     "@remotion/renderer": ["@remotion/renderer@4.0.441", "", { "dependencies": { "@remotion/licensing": "4.0.441", "@remotion/streaming": "4.0.441", "execa": "5.1.1", "extract-zip": "2.0.1", "remotion": "4.0.441", "source-map": "^0.8.0-beta.0", "ws": "8.17.1" }, "optionalDependencies": { "@remotion/compositor-darwin-arm64": "4.0.441", "@remotion/compositor-darwin-x64": "4.0.441", "@remotion/compositor-linux-arm64-gnu": "4.0.441", "@remotion/compositor-linux-arm64-musl": "4.0.441", "@remotion/compositor-linux-x64-gnu": "4.0.441", "@remotion/compositor-linux-x64-musl": "4.0.441", "@remotion/compositor-win32-x64-msvc": "4.0.441" }, "peerDependencies": { "react": ">=16.8.0", "react-dom": ">=16.8.0" } }, "sha512-NcauF41tDR294eDGC+NzAo8135F0rIpRVcrFkxKTn+Qoyd5qy3y2uBBC92lcL+tAj8ECjXTRlBE3VJ0E40klaQ=="],
 
