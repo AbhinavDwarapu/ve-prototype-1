@@ -20,6 +20,8 @@ const DEFAULT_CLASS_NAMES: TimelineClassNames = {
   layer:
     "relative h-full w-full rounded-md bg-neutral-800/60 flex items-center px-2 text-xs text-neutral-400",
   clip: "h-full w-full rounded-md bg-indigo-500 shadow ring-1 ring-indigo-300/40",
+  selectedClip:
+    "bg-indigo-400 ring-2 ring-white shadow-[0_0_0_3px_rgba(99,102,241,0.45)]",
   moveable: "demo-moveable",
   playhead: "demo-playhead",
   ticks: "demo-ticks",
@@ -60,6 +62,8 @@ export default function TimelineComponent({
   const storeLayers = useTimelineStore((s) => s.layers);
   const storeClips = useTimelineStore((s) => s.clips);
   const updateClip = useTimelineStore((s) => s.updateClip);
+  const selectedClipIds = useTimelineStore((s) => s.selectedClipIds);
+  const selectClips = useTimelineStore((s) => s.selectClips);
 
   const timeline = currentTimelineId ? timelines[currentTimelineId] : null;
 
@@ -95,7 +99,9 @@ export default function TimelineComponent({
       durationSec={durationSec}
       options={options}
       currentTimeSec={currentTimeSec}
+      selectedClipIds={selectedClipIds}
       onSeek={(timeSec) => seekTo(Math.round(timeSec * fps))}
+      onSelectClip={(clipId) => selectClips([clipId])}
       onMove={(clip, result) =>
         updateClip(clip.id, {
           startPx: result.startPx,

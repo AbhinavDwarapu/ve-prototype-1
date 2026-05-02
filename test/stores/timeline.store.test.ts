@@ -107,11 +107,22 @@ describe("Timeline Store Tests", () => {
   it("should update clip fields in place", () => {
     useTimelineStore
       .getState()
-      .updateClip("clip-1", { startPx: 45, widthPx: 180 });
+      .updateClip("clip-1", {
+        startPx: 45,
+        widthPx: 180,
+        playbackRate: 1.25,
+        volume: 0.5,
+        trimBefore: 12,
+        trimAfter: 120,
+      });
 
     const state = useTimelineStore.getState();
     expect(state.clips["clip-1"].startPx).toBe(45);
     expect(state.clips["clip-1"].widthPx).toBe(180);
+    expect(state.clips["clip-1"].playbackRate).toBe(1.25);
+    expect(state.clips["clip-1"].volume).toBe(0.5);
+    expect(state.clips["clip-1"].trimBefore).toBe(12);
+    expect(state.clips["clip-1"].trimAfter).toBe(120);
     expect(state.layers["layer-1"].clipIds).toContain("clip-1");
   });
 
