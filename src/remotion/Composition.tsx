@@ -7,11 +7,18 @@ import { ClipAudio, ClipImage, ClipVideo } from "./components";
 import { prefetchTimelineAssets } from "./preload-assets";
 
 function renderClip(clip: Clip, src: string) {
+  const mediaProps = {
+    playbackRate: clip.playbackRate ?? 1,
+    volume: clip.volume ?? 1,
+    trimBefore: clip.trimBefore || undefined,
+    trimAfter: clip.trimAfter || undefined,
+  };
+
   switch (clip.kind) {
     case "video":
-      return <ClipVideo src={src} />;
+      return <ClipVideo src={src} {...mediaProps} />;
     case "audio":
-      return <ClipAudio src={src} />;
+      return <ClipAudio src={src} {...mediaProps} />;
     case "image":
       return <ClipImage src={src} />;
     default:
