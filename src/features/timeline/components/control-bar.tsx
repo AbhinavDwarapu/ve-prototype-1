@@ -5,6 +5,7 @@ import { getDurationInFrames } from "@/stores/composition-settings/defaults";
 import { useCompositionSettingsStore } from "@/stores/composition-settings/store";
 import { Button } from "@/shared/components/ui/button";
 import { useRemotionPlayerStore } from "@/stores/remotion-player/store";
+import { useTimelineStore } from "@/stores/timeline/store";
 import {
   createVideoSaveTarget,
   type VideoSaveTarget,
@@ -37,6 +38,7 @@ export default function ControlBar() {
   const isPlaying = useRemotionPlayerStore((s) => s.isPlaying);
   const play = useRemotionPlayerStore((s) => s.play);
   const pause = useRemotionPlayerStore((s) => s.pause);
+  const selectClips = useTimelineStore((s) => s.selectClips);
   const fps = useCompositionSettingsStore((s) => s.fps);
   const durationSec = useCompositionSettingsStore((s) => s.durationSec);
   const durationInFrames = getDurationInFrames(fps, durationSec);
@@ -64,6 +66,7 @@ export default function ControlBar() {
       return;
     }
 
+    selectClips([]);
     setExportSaveTarget(saveTarget);
     setExportDialogKey((k) => k + 1);
     setExportOpen(true);
