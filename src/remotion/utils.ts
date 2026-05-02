@@ -1,11 +1,5 @@
 import type { RefObject } from "react";
-
-/** Pixels per second at scale 1, used for time ↔ horizontal position conversions. */
-export const PX_PER_SECOND = 100;
-export const COMPOSITION_FPS = 60;
-export const COMPOSITION_DURATION_SEC = 60;
-export const COMPOSITION_DURATION_FRAMES =
-  COMPOSITION_FPS * COMPOSITION_DURATION_SEC;
+import { compositionSettingsDefaults } from "@/stores/composition-settings/defaults";
 
 /** Thresholds and speeds for horizontal auto-scroll while scrubbing near container edges. */
 export const SCRUB_CONFIG = {
@@ -42,7 +36,9 @@ export function getTimelineWidth(
     return 0;
   }
 
-  return (durationInFrames / fps) * PX_PER_SECOND * scale;
+  return (
+    (durationInFrames / fps) * compositionSettingsDefaults.pixelsPerSecond * scale
+  );
 }
 
 /**
@@ -199,13 +195,13 @@ export function getFrameFromSeconds(seconds: number, fps: number) {
  *
  * @param seconds - Time in seconds (negative values clamp to 0).
  * @param scale - Horizontal zoom factor.
- * @param pxPerSecond - Pixels per second at scale 1; defaults to {@link PX_PER_SECOND}.
+ * @param pxPerSecond - Pixels per second at scale 1; defaults to composition default.
  * @returns x offset in pixels.
  */
 export function getXFromSeconds(
   seconds: number,
   scale: number,
-  pxPerSecond = PX_PER_SECOND,
+  pxPerSecond = compositionSettingsDefaults.pixelsPerSecond,
 ) {
   return Math.max(0, seconds * pxPerSecond * scale);
 }
@@ -215,13 +211,13 @@ export function getXFromSeconds(
  *
  * @param x - Horizontal offset in pixels.
  * @param scale - Horizontal zoom factor.
- * @param pxPerSecond - Pixels per second at scale 1; defaults to {@link PX_PER_SECOND}.
+ * @param pxPerSecond - Pixels per second at scale 1; defaults to composition default.
  * @returns Non-negative seconds, or {@code 0} if scale or pxPerSecond is non-positive.
  */
 export function getSecondsFromX(
   x: number,
   scale: number,
-  pxPerSecond = PX_PER_SECOND,
+  pxPerSecond = compositionSettingsDefaults.pixelsPerSecond,
 ) {
   if (scale <= 0 || pxPerSecond <= 0) return 0;
   return Math.max(0, x / (pxPerSecond * scale));

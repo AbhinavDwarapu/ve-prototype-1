@@ -6,11 +6,7 @@ import {
   type TimelineProps,
 } from "timeline-as-library";
 import { useCurrentPlayerFrame } from "@/remotion/hooks/use-current-player-frame";
-import {
-  COMPOSITION_DURATION_SEC,
-  COMPOSITION_FPS,
-  PX_PER_SECOND,
-} from "@/remotion/utils";
+import { useCompositionSettingsStore } from "@/stores/composition-settings/store";
 import { useRemotionPlayerStore } from "@/stores/remotion-player/store";
 import { useTimelineStore } from "@/stores/timeline/store";
 import type {
@@ -41,15 +37,23 @@ export type TimelineWrapperProps = Partial<
 >;
 
 export default function TimelineComponent({
-  pixelsPerSecond = PX_PER_SECOND,
-  durationSec = COMPOSITION_DURATION_SEC,
+  pixelsPerSecond: pixelsPerSecondProp,
+  durationSec: durationSecProp,
   options,
   classNames,
 }: TimelineWrapperProps = {}) {
+  const storePixelsPerSecond = useCompositionSettingsStore(
+    (s) => s.pixelsPerSecond,
+  );
+  const storeDurationSec = useCompositionSettingsStore((s) => s.durationSec);
+  const fps = useCompositionSettingsStore((s) => s.fps);
+  const pixelsPerSecond = pixelsPerSecondProp ?? storePixelsPerSecond;
+  const durationSec = durationSecProp ?? storeDurationSec;
+
   const player = useRemotionPlayerStore((s) => s.player);
   const seekTo = useRemotionPlayerStore((s) => s.seekTo);
   const currentFrame = useCurrentPlayerFrame(player);
-  const currentTimeSec = currentFrame / COMPOSITION_FPS;
+  const currentTimeSec = currentFrame / fps;
 
   const currentTimelineId = useTimelineStore((s) => s.currentTimelineId);
   const timelines = useTimelineStore((s) => s.timelines);
@@ -91,7 +95,7 @@ export default function TimelineComponent({
       durationSec={durationSec}
       options={options}
       currentTimeSec={currentTimeSec}
-      onSeek={(timeSec) => seekTo(Math.round(timeSec * COMPOSITION_FPS))}
+      onSeek={(timeSec) => seekTo(Math.round(timeSec * fps))}
       onMove={(clip, result) =>
         updateClip(clip.id, {
           startPx: result.startPx,

@@ -3,6 +3,8 @@ import "./App.css";
 import FileFolderSidebar from "./features/file-folder";
 import PlayerPage from "./features/player";
 import Timeline from "./features/timeline";
+import { getDurationInFrames } from "@/stores/composition-settings/defaults";
+import { useCompositionSettingsStore } from "@/stores/composition-settings/store";
 import { useTimelineStore } from "@/stores/timeline/store";
 import type {
   Asset,
@@ -13,6 +15,9 @@ import type {
 
 /** Temporary test seed: public sample media so the Remotion player can render clips from the store. */
 function seedTestTimelineStore() {
+  const { fps, durationSec } = useCompositionSettingsStore.getState();
+  const durationInFrames = getDurationInFrames(fps, durationSec);
+
   const timelineId = "test-timeline";
   const layerVideoId = "test-layer-video";
   const layerImageId = "test-layer-image";
@@ -25,8 +30,8 @@ function seedTestTimelineStore() {
     id: timelineId,
     name: "Test timeline",
     layerIds: [layerVideoId, layerImageId],
-    fps: 60,
-    duration: 600,
+    fps,
+    duration: durationInFrames,
   };
 
   const layerVideo: Layer = {

@@ -1,5 +1,5 @@
 import { useMemo, useRef, useState } from "react";
-import { COMPOSITION_DURATION_SEC, PX_PER_SECOND } from "@/remotion/utils";
+import { useCompositionSettingsStore } from "@/stores/composition-settings/store";
 import { useTimelineStore } from "@/stores/timeline/store";
 import { FileFolderAssetList } from "./components/file-folder-asset-list";
 import { FileFolderError } from "./components/file-folder-error";
@@ -11,13 +11,13 @@ import type { FileFolderAsset } from "./types";
 
 const IMAGE_DEFAULT_DURATION_SEC = 5;
 
-function getClipDurationSec(asset: FileFolderAsset) {
+function getClipDurationSec(asset: FileFolderAsset, compositionDurationSec: number) {
   const duration =
     asset.metadata.type === "image"
       ? IMAGE_DEFAULT_DURATION_SEC
       : (asset.metadata.durationSec ?? IMAGE_DEFAULT_DURATION_SEC);
 
-  return Math.min(Math.max(duration, 1), COMPOSITION_DURATION_SEC);
+  return Math.min(Math.max(duration, 1), compositionDurationSec);
 }
 
 export default function FileFolderSidebar() {
@@ -32,6 +32,11 @@ export default function FileFolderSidebar() {
     storageEstimate,
     uploadFiles,
   } = useFileFolderAssets();
+
+  const compositionDurationSec = useCompositionSettingsStore(
+    (s) => s.durationSec,
+  );
+  const pixelsPerSecond = useCompositionSettingsStore((s) => s.pixelsPerSecond);
 
   const currentTimelineId = useTimelineStore((s) => s.currentTimelineId);
   const addAsset = useTimelineStore((s) => s.addAsset);
@@ -80,7 +85,9 @@ export default function FileFolderSidebar() {
 
     addClip(layerId, {
       startPx: 0,
-      widthPx: getClipDurationSec(selectedAsset) * PX_PER_SECOND,
+      widthPx:
+        getClipDurationSec(selectedAsset, compositionDurationSec) *
+        pixelsPerSecond,
       assetId,
       kind: selectedAsset.type,
     });
