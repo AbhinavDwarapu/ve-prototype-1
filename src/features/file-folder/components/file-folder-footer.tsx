@@ -15,7 +15,7 @@ export function FileFolderFooter({
   onAddAsset,
 }: FileFolderFooterProps) {
   return (
-    <div className="border-t p-4">
+    <div className="border-t border-editor-outline bg-editor-panel-strong/35 p-4">
       {!hasTimeline && (
         <p className="mb-2 text-xs text-muted-foreground">
           Create or load a timeline before adding assets.

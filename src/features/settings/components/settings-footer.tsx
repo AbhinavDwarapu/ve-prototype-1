@@ -8,7 +8,7 @@ export function SettingsFooter({
   onSave: () => void;
 }) {
   return (
-    <div className="border-t p-4">
+    <div className="border-t border-editor-outline bg-editor-panel-strong/35 p-4">
       <Button className="w-full" disabled={disabled} onClick={onSave}>
         Save
       </Button>

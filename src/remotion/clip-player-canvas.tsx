@@ -13,7 +13,7 @@ import {
 } from "./hooks/use-clip-layout-interaction";
 
 const HANDLE_SIZE = 8;
-const OUTLINE_COLOR = "#0B84F3";
+const OUTLINE_COLOR = "var(--editor-selection, #cdbdff)";
 
 function renderVisualClip(clip: Clip, src: string) {
   const mediaProps = {
@@ -56,10 +56,11 @@ function ResizeHandle({
       position: "absolute",
       height: size,
       width: size,
-      backgroundColor: "white",
+      backgroundColor: "var(--foreground, white)",
       border: `${borderSize}px solid ${OUTLINE_COLOR}`,
+      borderRadius: Math.max(2, Math.round(3 / scale)),
     }),
-    [borderSize, size],
+    [borderSize, scale, size],
   );
 
   const style: CSSProperties = useMemo(() => {

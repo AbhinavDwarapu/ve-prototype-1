@@ -16,12 +16,12 @@ import type {
 import "../styles.css";
 
 const DEFAULT_CLASS_NAMES: TimelineClassNames = {
-  root: "relative overflow-x-auto overflow-y-hidden rounded-sm bg-neutral-900 shadow-lg demo-timeline",
+  root: "relative min-h-0 flex-1 overflow-auto rounded-lg border border-editor-outline bg-editor-panel shadow-[var(--shadow-editor-1)] demo-timeline",
   layer:
-    "relative h-full w-full rounded-md bg-neutral-800/60 flex items-center px-2 text-xs text-neutral-400",
-  clip: "h-full w-full rounded-md bg-indigo-500 shadow ring-1 ring-indigo-300/40",
+    "relative h-full w-full rounded-md bg-editor-surface/85 flex items-center px-2 text-xs text-muted-foreground",
+  clip: "h-full w-full rounded-md bg-editor-primary-container text-editor-on-primary-container shadow-sm ring-1 ring-editor-primary/45",
   selectedClip:
-    "bg-indigo-400 ring-2 ring-white shadow-[0_0_0_3px_rgba(99,102,241,0.45)]",
+    "bg-editor-primary text-primary-foreground ring-2 ring-white/70 shadow-[0_0_0_3px_color-mix(in_oklch,var(--editor-primary)_42%,transparent)]",
   moveable: "demo-moveable",
   playhead: "demo-playhead",
   ticks: "demo-ticks",

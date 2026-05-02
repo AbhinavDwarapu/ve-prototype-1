@@ -16,8 +16,10 @@ export function ProjectSettingsPanel({
 }) {
   return (
     <>
-      <div className="border-b p-4">
-        <h2 className="text-base font-semibold">Project Settings</h2>
+      <div className="border-b border-editor-outline bg-editor-panel-strong/45 p-4">
+        <h2 className="text-base font-semibold tracking-tight">
+          Project Settings
+        </h2>
         <p className="mt-1 text-xs text-muted-foreground">
           Update Remotion composition dimensions, duration, and timeline scale.
         </p>

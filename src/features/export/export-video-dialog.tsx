@@ -117,18 +117,18 @@ export function ExportVideoDialog({
                 for best results.
               </DialogPrimitives.Description>
               <div
-                className="mt-4 h-2 w-full overflow-hidden rounded-full bg-neutral-800"
+                className="mt-4 h-2 w-full overflow-hidden rounded-full bg-editor-surface"
                 role="progressbar"
                 aria-valuenow={progressPercent}
                 aria-valuemin={0}
                 aria-valuemax={100}
               >
                 <div
-                  className="h-full rounded-full bg-indigo-500 transition-[width] duration-150"
+                  className="h-full rounded-full bg-editor-primary transition-[width] duration-150"
                   style={{ width: `${progressPercent}%` }}
                 />
               </div>
-              <p className="mt-2 text-right text-xs font-mono tabular-nums text-neutral-500">
+              <p className="mt-2 text-right font-mono text-xs tabular-nums text-muted-foreground">
                 {progressPercent}%
               </p>
             </>
@@ -155,7 +155,7 @@ export function ExportVideoDialog({
               <DialogPrimitives.Title id={titleId}>
                 Export failed
               </DialogPrimitives.Title>
-              <DialogPrimitives.Description className="mt-3 whitespace-pre-wrap text-red-300/90">
+              <DialogPrimitives.Description className="mt-3 whitespace-pre-wrap text-destructive">
                 {errorMessage}
               </DialogPrimitives.Description>
               <div className="mt-5 flex justify-end gap-2">

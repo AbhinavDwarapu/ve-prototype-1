@@ -1,22 +1,22 @@
 /* Default styling for the app's Timeline wrapper around `timeline-as-library`.
  * These classes are referenced via `DEFAULT_CLASS_NAMES` in ./index.tsx. */
 .demo-moveable {
-  --moveable-color: #a5b4fc;
+  --moveable-color: var(--editor-primary);
 }
 
 .demo-moveable .moveable-control {
   width: 8px !important;
   height: 22px !important;
   border-radius: 3px !important;
-  border: 1px solid #a5b4fc !important;
-  background: #ffffff !important;
+  border: 1px solid var(--editor-primary) !important;
+  background: var(--foreground) !important;
   margin-top: -11px !important;
   margin-left: -4px !important;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 1px 3px oklch(0 0 0 / 35%);
 }
 
 .demo-moveable .moveable-control:hover {
-  background: #eef2ff !important;
+  background: var(--primary) !important;
   transform: scaleY(1.1);
 }
 
@@ -29,37 +29,38 @@
 }
 
 .demo-playhead {
-  background: #f43f5e;
-  box-shadow: 0 0 8px rgba(244, 63, 94, 0.6);
+  background: var(--editor-playhead);
+  box-shadow: 0 0 10px color-mix(in oklch, var(--editor-playhead) 55%, transparent);
 }
 
 .demo-ticks {
-  background: #111827;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-  color: #9ca3af;
+  background: color-mix(in oklch, var(--editor-panel-strong) 76%, black);
+  border-bottom: 1px solid var(--editor-outline);
+  color: var(--muted-foreground);
 }
 
 .demo-tick {
-  background: rgba(255, 255, 255, 0.15);
+  background: color-mix(in oklch, var(--foreground) 16%, transparent);
 }
 
 .demo-tick-major {
-  background: rgba(255, 255, 255, 0.35);
+  background: color-mix(in oklch, var(--editor-primary) 46%, transparent);
 }
 
 .demo-tick-label {
-  color: #9ca3af;
+  color: var(--muted-foreground);
   font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
   font-size: 10px;
 }
 
 .demo-playhead-head {
-  background: #f43f5e;
+  background: var(--editor-playhead);
   clip-path: polygon(50% 100%, 0 0, 100% 0);
-  box-shadow: 0 1px 2px rgba(244, 63, 94, 0.8);
+  box-shadow: 0 1px 3px color-mix(in oklch, var(--editor-playhead) 70%, transparent);
 }
 
 .demo-timeline::-webkit-scrollbar {
+  width: 10px;
   height: 10px;
 }
 
@@ -68,10 +69,10 @@
 }
 
 .demo-timeline::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.12);
-  border-radius: 6px;
+  background: color-mix(in oklch, var(--foreground) 16%, transparent);
+  border-radius: 5px;
 }
 
 .demo-timeline::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.2);
+  background: color-mix(in oklch, var(--editor-primary) 34%, transparent);
 }

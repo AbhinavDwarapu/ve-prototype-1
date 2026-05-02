@@ -1,3 +1,5 @@
+import { TextField } from "@/shared/components/ui/text-field";
+
 export type NumberFieldProps = {
   label: string;
   value: number;
@@ -16,17 +18,14 @@ export function NumberField({
   help,
 }: NumberFieldProps) {
   return (
-    <label className="grid gap-1.5 text-sm">
-      <span className="font-medium text-foreground">{label}</span>
-      <input
-        type="number"
-        value={value}
-        min={min}
-        step={step}
-        onChange={(event) => onChange(event.currentTarget.valueAsNumber)}
-        className="h-9 min-w-10 rounded-md border border-input bg-background px-3 text-sm outline-none transition focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/30"
-      />
-      {help && <span className="text-xs text-muted-foreground">{help}</span>}
-    </label>
+    <TextField
+      label={label}
+      type="number"
+      value={value}
+      min={min}
+      step={step}
+      help={help}
+      onChange={(event) => onChange(event.currentTarget.valueAsNumber)}
+    />
   );
 }
