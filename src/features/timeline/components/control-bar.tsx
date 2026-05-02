@@ -1,9 +1,7 @@
 import { FastForward, Pause, Play, Rewind } from "lucide-react";
 import { useCurrentPlayerFrame } from "@/remotion/hooks/use-current-player-frame";
-import {
-  COMPOSITION_DURATION_FRAMES,
-  COMPOSITION_FPS,
-} from "@/remotion/utils";
+import { getDurationInFrames } from "@/stores/composition-settings/defaults";
+import { useCompositionSettingsStore } from "@/stores/composition-settings/store";
 import { Button } from "@/shared/components/ui/button";
 import { useRemotionPlayerStore } from "@/stores/remotion-player/store";
 import { useHoldToSeek } from "../hooks/use-hold-to-seek";
@@ -24,14 +22,17 @@ export default function ControlBar() {
   const isPlaying = useRemotionPlayerStore((s) => s.isPlaying);
   const play = useRemotionPlayerStore((s) => s.play);
   const pause = useRemotionPlayerStore((s) => s.pause);
+  const fps = useCompositionSettingsStore((s) => s.fps);
+  const durationSec = useCompositionSettingsStore((s) => s.durationSec);
+  const durationInFrames = getDurationInFrames(fps, durationSec);
 
   const currentFrame = useCurrentPlayerFrame(player);
-  const currentSec = currentFrame / COMPOSITION_FPS;
-  const totalSec = COMPOSITION_DURATION_FRAMES / COMPOSITION_FPS;
+  const currentSec = currentFrame / fps;
+  const totalSec = durationInFrames / fps;
 
   const seekConfig = {
-    fps: COMPOSITION_FPS,
-    durationFrames: COMPOSITION_DURATION_FRAMES,
+    fps,
+    durationFrames: durationInFrames,
     skipSeconds: SKIP_SECONDS,
   } as const;
   const backwardHandlers = useHoldToSeek({ direction: -1, ...seekConfig });
@@ -49,7 +50,7 @@ export default function ControlBar() {
           {formatTime(currentSec)} / {formatTime(totalSec)}
         </span>
         <span className="text-neutral-500">
-          {currentFrame} / {COMPOSITION_DURATION_FRAMES}
+          {currentFrame} / {durationInFrames}
         </span>
       </div>
 

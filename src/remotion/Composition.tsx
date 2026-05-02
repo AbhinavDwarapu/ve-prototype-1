@@ -1,10 +1,10 @@
 import { useEffect, useMemo, useState } from "react";
 import { AbsoluteFill, Sequence, useVideoConfig } from "remotion";
+import { useCompositionSettingsStore } from "@/stores/composition-settings/store";
 import { useTimelineStore } from "@/stores/timeline/store";
 import type { Asset, Clip, Layer, Timeline } from "@/stores/timeline/types";
 import { ClipAudio, ClipImage, ClipVideo } from "./components";
 import { prefetchTimelineAssets } from "./preload-assets";
-import { PX_PER_SECOND } from "./utils";
 
 function renderClip(clip: Clip, src: string) {
   switch (clip.kind) {
@@ -56,6 +56,7 @@ function getTimelineAssets({
 
 export const MyComposition = () => {
   const { fps } = useVideoConfig();
+  const pixelsPerSecond = useCompositionSettingsStore((s) => s.pixelsPerSecond);
   const [prefetchedAssetKey, setPrefetchedAssetKey] = useState<string | null>(
     null,
   );
@@ -131,10 +132,10 @@ export const MyComposition = () => {
             const asset = assets[clip.assetId];
             if (!asset) return null;
 
-            const from = Math.round((clip.startPx / PX_PER_SECOND) * fps);
+            const from = Math.round((clip.startPx / pixelsPerSecond) * fps);
             const durationInFrames = Math.max(
               1,
-              Math.round((clip.widthPx / PX_PER_SECOND) * fps),
+              Math.round((clip.widthPx / pixelsPerSecond) * fps),
             );
 
             return (
