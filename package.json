@@ -20,6 +20,7 @@
     "@remotion/media": "4.0.441",
     "@remotion/player": "4.0.441",
     "@remotion/preload": "^4.0.455",
+    "@remotion/web-renderer": "4.0.441",
     "@storybook/react-vite": "^10.3.3",
     "@tailwindcss/vite": "^4.2.2",
     "class-variance-authority": "^0.7.1",
