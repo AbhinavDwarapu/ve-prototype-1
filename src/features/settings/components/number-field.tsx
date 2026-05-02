@@ -24,7 +24,7 @@ export function NumberField({
         min={min}
         step={step}
         onChange={(event) => onChange(event.currentTarget.valueAsNumber)}
-        className="h-9 rounded-md border border-input bg-background px-3 text-sm outline-none transition focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/30"
+        className="h-9 min-w-10 rounded-md border border-input bg-background px-3 text-sm outline-none transition focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/30"
       />
       {help && <span className="text-xs text-muted-foreground">{help}</span>}
     </label>
