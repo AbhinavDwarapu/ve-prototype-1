@@ -7,7 +7,7 @@ import {
   ClientSideRenderPreflightError,
   runClientSideRender,
 } from "./run-client-side-render";
-import { saveVideoBlob } from "./save-video-blob";
+import { saveVideoBlob, type VideoSaveTarget } from "./save-video-blob";
 
 type Phase = "progress" | "success" | "error";
 
@@ -21,19 +21,16 @@ function formatExportError(error: unknown): string {
   return String(error);
 }
 
-function defaultExportFilename(): string {
-  const stamp = new Date().toISOString().replaceAll(":", "-").slice(0, 19);
-  return `export-${stamp}.mp4`;
-}
-
 export type ExportVideoDialogProps = {
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  saveTarget: VideoSaveTarget | null;
 };
 
 export function ExportVideoDialog({
   open,
   onOpenChange,
+  saveTarget,
 }: ExportVideoDialogProps) {
   const titleId = useId();
   const [phase, setPhase] = useState<Phase>("progress");
@@ -52,6 +49,10 @@ export function ExportVideoDialog({
 
     (async () => {
       try {
+        if (!saveTarget) {
+          throw new Error("No export destination was selected.");
+        }
+
         const blob = await runClientSideRender({
           signal: abortController.signal,
           onProgress: (p) => {
@@ -65,7 +66,7 @@ export function ExportVideoDialog({
           return;
         }
 
-        await saveVideoBlob(blob, defaultExportFilename());
+        await saveVideoBlob(blob, saveTarget);
 
         if (runIdRef.current !== runId || abortController.signal.aborted) {
           return;
@@ -91,7 +92,7 @@ export function ExportVideoDialog({
     return () => {
       abortController.abort();
     };
-  }, [open, onOpenChange]);
+  }, [open, onOpenChange, saveTarget]);
 
   const handleOpenChange = (next: boolean) => {
     if (!next) {

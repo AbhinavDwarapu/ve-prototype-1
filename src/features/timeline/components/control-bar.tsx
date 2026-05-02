@@ -5,6 +5,10 @@ import { getDurationInFrames } from "@/stores/composition-settings/defaults";
 import { useCompositionSettingsStore } from "@/stores/composition-settings/store";
 import { Button } from "@/shared/components/ui/button";
 import { useRemotionPlayerStore } from "@/stores/remotion-player/store";
+import {
+  createVideoSaveTarget,
+  type VideoSaveTarget,
+} from "@/features/export/save-video-blob";
 import { useHoldToSeek } from "../hooks/use-hold-to-seek";
 
 const ExportVideoDialog = lazy(() =>
@@ -27,6 +31,8 @@ const formatTime = (totalSeconds: number) => {
 export default function ControlBar() {
   const [exportOpen, setExportOpen] = useState(false);
   const [exportDialogKey, setExportDialogKey] = useState(0);
+  const [exportSaveTarget, setExportSaveTarget] =
+    useState<VideoSaveTarget | null>(null);
   const player = useRemotionPlayerStore((s) => s.player);
   const isPlaying = useRemotionPlayerStore((s) => s.isPlaying);
   const play = useRemotionPlayerStore((s) => s.play);
@@ -52,6 +58,17 @@ export default function ControlBar() {
     else play();
   };
 
+  const startExport = async () => {
+    const saveTarget = await createVideoSaveTarget();
+    if (!saveTarget) {
+      return;
+    }
+
+    setExportSaveTarget(saveTarget);
+    setExportDialogKey((k) => k + 1);
+    setExportOpen(true);
+  };
+
   return (
     <>
       <Suspense fallback={null}>
@@ -59,6 +76,7 @@ export default function ControlBar() {
           key={exportDialogKey}
           open={exportOpen}
           onOpenChange={setExportOpen}
+          saveTarget={exportSaveTarget}
         />
       </Suspense>
     <div className="flex items-center justify-between h-10 px-3 bg-neutral-900 rounded-lg text-neutral-200">
@@ -103,10 +121,7 @@ export default function ControlBar() {
           size="icon"
           variant="ghost"
           aria-label="Export video"
-          onClick={() => {
-            setExportDialogKey((k) => k + 1);
-            setExportOpen(true);
-          }}
+          onClick={startExport}
         >
           <Download />
         </Button>
