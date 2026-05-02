@@ -151,7 +151,7 @@ export default function SettingsPanel() {
   };
 
   return (
-    <aside className="absolute top-2 right-2 bottom-72 z-10 flex w-80 flex-col overflow-hidden rounded-lg border border-editor-outline bg-editor-panel shadow-[var(--shadow-editor-1)] backdrop-blur-md">
+    <aside className="absolute top-2 right-2 bottom-[19rem] z-10 flex w-80 flex-col overflow-hidden rounded-lg border border-editor-outline bg-editor-panel shadow-[var(--shadow-editor-1)] backdrop-blur-md">
       {selectedClip && clipDraft ? (
         <ClipSettingsPanel
           clip={selectedClip}

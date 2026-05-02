@@ -94,7 +94,7 @@ export default function FileFolderSidebar() {
   }
 
   return (
-    <aside className="absolute top-2 bottom-72 left-2 z-10 flex w-80 flex-col overflow-hidden rounded-lg border border-editor-outline bg-editor-panel shadow-[var(--shadow-editor-1)] backdrop-blur-md">
+    <aside className="absolute top-2 bottom-[19rem] left-2 z-10 flex w-80 flex-col overflow-hidden rounded-lg border border-editor-outline bg-editor-panel shadow-[var(--shadow-editor-1)] backdrop-blur-md">
       <div className="border-b border-editor-outline bg-editor-panel-strong/45 p-4">
         <h2 className="text-base font-semibold tracking-tight">File Folder</h2>
         <p className="mt-1 text-xs text-muted-foreground">
