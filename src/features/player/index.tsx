@@ -14,6 +14,7 @@ export default function PlayerPage() {
   const height = useCompositionSettingsStore((s) => s.height);
   const durationInFrames = getDurationInFrames(fps, durationSec);
   const setPlayer = useRemotionPlayerStore((s) => s.setPlayer);
+  const previewScale = 0.5;
 
   const playerRef = useCallback(
     (node: PlayerRef | null) => {
@@ -30,8 +31,12 @@ export default function PlayerPage() {
             component={MyComposition}
             durationInFrames={durationInFrames}
             fps={fps}
-            compositionWidth={width / 2}
-            compositionHeight={height / 2}
+            compositionWidth={width}
+            compositionHeight={height}
+            style={{
+              width: width * previewScale,
+              height: height * previewScale,
+            }}
             ref={playerRef}
             overflowVisible
           />
