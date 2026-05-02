@@ -10,10 +10,17 @@ export type Asset = {
   src: string;
 };
 
+export type ClipPlaybackSettings = {
+  playbackRate?: number;
+  volume?: number;
+  trimBefore?: number;
+  trimAfter?: number;
+};
+
 export type Clip = LibraryClip & {
   assetId: ID;
   kind: ValidAssetType;
-};
+} & ClipPlaybackSettings;
 
 export type Layer = {
   id: ID;
