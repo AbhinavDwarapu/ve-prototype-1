@@ -26,12 +26,12 @@ export function SourceChoiceCard({
       disabled={disabled}
       onClick={onClick}
       className={cn(
-        "h-auto w-full flex-col items-start gap-3 rounded-xl p-4 text-left whitespace-normal",
+        "h-auto w-full flex-col items-start gap-3 rounded-lg bg-editor-surface p-4 text-left whitespace-normal",
         disabled && "opacity-60",
       )}
     >
       <span className="flex w-full items-center gap-3">
-        <span className="flex size-10 items-center justify-center rounded-lg bg-muted text-foreground">
+        <span className="flex size-10 items-center justify-center rounded-md bg-editor-primary-container text-editor-on-primary-container">
           {icon}
         </span>
         <span className="flex flex-col">

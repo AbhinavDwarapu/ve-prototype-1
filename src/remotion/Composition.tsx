@@ -129,7 +129,7 @@ export const MyComposition = () => {
 
   return (
     <AbsoluteFill
-      style={{ backgroundColor: "black" }}
+      style={{ backgroundColor: "var(--editor-canvas, black)" }}
       onPointerDown={(event) => {
         if (event.button === 0) {
           selectClips([]);

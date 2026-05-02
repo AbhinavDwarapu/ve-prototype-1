@@ -79,12 +79,12 @@ export default function ControlBar() {
           saveTarget={exportSaveTarget}
         />
       </Suspense>
-    <div className="flex items-center justify-between h-10 px-3 bg-neutral-900 rounded-lg text-neutral-200">
-      <div className="flex items-center gap-3 font-mono text-xs tabular-nums min-w-[180px]">
+    <div className="flex h-10 items-center justify-between rounded-lg border border-editor-outline bg-editor-panel px-3 text-foreground shadow-[var(--shadow-editor-1)]">
+      <div className="flex min-w-[180px] items-center gap-3 font-mono text-xs tabular-nums">
         <span>
           {formatTime(currentSec)} / {formatTime(totalSec)}
         </span>
-        <span className="text-neutral-500">
+        <span className="text-muted-foreground">
           {currentFrame} / {durationInFrames}
         </span>
       </div>

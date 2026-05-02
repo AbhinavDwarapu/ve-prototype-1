@@ -18,7 +18,7 @@ function Backdrop({
   return (
     <Dialog.Backdrop
       className={cn(
-        "fixed inset-0 z-50 bg-black/70 backdrop-blur-[1px] transition-opacity data-[ending-style]:opacity-0 data-[starting-style]:opacity-0",
+        "fixed inset-0 z-50 bg-black/60 backdrop-blur-sm transition-opacity data-[ending-style]:opacity-0 data-[starting-style]:opacity-0",
         className,
       )}
       {...props}
@@ -33,7 +33,7 @@ function Popup({
   return (
     <Dialog.Popup
       className={cn(
-        "fixed top-1/2 left-1/2 z-50 w-[min(100%-1.5rem,28rem)] -translate-x-1/2 -translate-y-1/2 rounded-lg border border-neutral-700 bg-neutral-900 p-5 text-neutral-100 shadow-xl outline-none",
+        "fixed top-1/2 left-1/2 z-50 w-[min(100%-1.5rem,28rem)] -translate-x-1/2 -translate-y-1/2 rounded-lg border border-editor-outline bg-popover p-5 text-popover-foreground shadow-[var(--shadow-editor-2)] outline-none",
         className,
       )}
       {...props}
@@ -53,7 +53,7 @@ function Title({ className, ...props }: Dialog.Title.Props) {
 function Description({ className, ...props }: Dialog.Description.Props) {
   return (
     <Dialog.Description
-      className={cn("mt-2 text-sm text-neutral-400", className)}
+      className={cn("mt-2 text-sm text-muted-foreground", className)}
       {...props}
     />
   );

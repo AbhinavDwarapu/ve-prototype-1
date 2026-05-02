@@ -27,9 +27,11 @@ export function ClipSettingsPanel({
 
   return (
     <>
-      <div className="flex items-start justify-between gap-3 border-b p-4">
+      <div className="flex items-start justify-between gap-3 border-b border-editor-outline bg-editor-panel-strong/45 p-4">
         <div>
-          <h2 className="text-base font-semibold">Clip Settings</h2>
+          <h2 className="text-base font-semibold tracking-tight">
+            Clip Settings
+          </h2>
           <p className="mt-1 text-xs text-muted-foreground">
             {assetName} · {clip.kind}
           </p>
@@ -67,7 +69,7 @@ export function ClipSettingsPanel({
         />
 
         {supportsMediaControls && (
-          <div className="space-y-4 border-t pt-4">
+          <div className="space-y-4 border-t border-editor-outline pt-4">
             <NumberField
               label="Playback Rate"
               value={draft.playbackRate}

@@ -23,16 +23,20 @@ export default function PlayerPage() {
   );
 
   return (
-    <div className="flex flex-col items-center justify-center aspect-video ">
-      <Player
-        component={MyComposition}
-        durationInFrames={durationInFrames}
-        fps={fps}
-        compositionWidth={width / 2}
-        compositionHeight={height / 2}
-        ref={playerRef}
-        overflowVisible
-      />
+    <div className="absolute top-2 right-[21rem] bottom-72 left-[21rem] flex flex-col items-center justify-center">
+      <div className="rounded-lg border border-editor-outline bg-editor-panel p-2 shadow-[var(--shadow-editor-2)]">
+        <div className="overflow-visible rounded-md bg-[var(--editor-canvas)] ring-1 ring-black/30">
+          <Player
+            component={MyComposition}
+            durationInFrames={durationInFrames}
+            fps={fps}
+            compositionWidth={width / 2}
+            compositionHeight={height / 2}
+            ref={playerRef}
+            overflowVisible
+          />
+        </div>
+      </div>
     </div>
   );
 }
