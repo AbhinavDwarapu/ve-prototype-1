@@ -4,6 +4,7 @@ import { useCompositionSettingsStore } from "@/stores/composition-settings/store
 import { useTimelineStore } from "@/stores/timeline/store";
 import type { Asset, Clip, Layer, Timeline } from "@/stores/timeline/types";
 import { ClipAudio, ClipImage, ClipVideo } from "./components";
+import { ClipPlayerCanvas } from "./clip-player-canvas";
 import { prefetchTimelineAssets } from "./preload-assets";
 
 function renderClip(clip: Clip, src: string) {
@@ -73,6 +74,7 @@ export const MyComposition = () => {
   const layers = useTimelineStore((s) => s.layers);
   const clips = useTimelineStore((s) => s.clips);
   const assets = useTimelineStore((s) => s.assets);
+  const selectClips = useTimelineStore((s) => s.selectClips);
 
   const timeline = currentTimelineId ? timelines[currentTimelineId] : null;
   const timelineAssets = useMemo(
@@ -126,13 +128,20 @@ export const MyComposition = () => {
   }, [assetPrefetchKey, assetsToPrefetch]);
 
   return (
-    <AbsoluteFill style={{ backgroundColor: "black" }}>
+    <AbsoluteFill
+      style={{ backgroundColor: "black" }}
+      onPointerDown={(event) => {
+        if (event.button === 0) {
+          selectClips([]);
+        }
+      }}
+    >
       {assetsPrefetched &&
-        timeline?.layerIds.flatMap((layerId) => {
+        timeline?.layerIds.flatMap((layerId, layerIndex) => {
           const layer = layers[layerId];
           if (!layer) return [];
 
-          return layer.clipIds.map((clipId) => {
+          return layer.clipIds.map((clipId, clipIndex) => {
             const clip = clips[clipId];
             if (!clip) return null;
 
@@ -151,8 +160,18 @@ export const MyComposition = () => {
                 from={from}
                 durationInFrames={durationInFrames}
                 premountFor={fps}
+                layout={clip.kind === "audio" ? "absolute-fill" : "none"}
               >
-                {renderClip(clip, asset.src)}
+                {clip.kind === "video" || clip.kind === "image" ? (
+                  <ClipPlayerCanvas
+                    clip={clip}
+                    assetSrc={asset.src}
+                    durationInFrames={durationInFrames}
+                    stackZIndex={layerIndex * 1000 + clipIndex}
+                  />
+                ) : (
+                  renderClip(clip, asset.src)
+                )}
               </Sequence>
             );
           });

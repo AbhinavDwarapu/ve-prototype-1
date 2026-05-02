@@ -17,9 +17,17 @@ export type ClipPlaybackSettings = {
   trimAfter?: number;
 };
 
+export type PlayerLayoutRect = {
+  left: number;
+  top: number;
+  width: number;
+  height: number;
+};
+
 export type Clip = LibraryClip & {
   assetId: ID;
   kind: ValidAssetType;
+  playerLayout?: PlayerLayoutRect;
 } & ClipPlaybackSettings;
 
 export type Layer = {
