@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import "./App.css";
 import FileFolderSidebar from "./features/file-folder";
 import PlayerPage from "./features/player";
+import SettingsPanel from "./features/settings";
 import Timeline from "./features/timeline";
 import { getDurationInFrames } from "@/stores/composition-settings/defaults";
 import { useCompositionSettingsStore } from "@/stores/composition-settings/store";
@@ -114,6 +115,7 @@ function App() {
   return (
     <main className="relative flex h-screen w-full flex-col items-center p-2">
       <FileFolderSidebar />
+      <SettingsPanel />
       <PlayerPage />
       <Timeline />
     </main>
