@@ -31,6 +31,7 @@ export default function PlayerPage() {
         compositionWidth={width / 2}
         compositionHeight={height / 2}
         ref={playerRef}
+        overflowVisible
       />
     </div>
   );

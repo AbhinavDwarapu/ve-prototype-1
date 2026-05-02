@@ -126,6 +126,25 @@ describe("Timeline Store Tests", () => {
     expect(state.layers["layer-1"].clipIds).toContain("clip-1");
   });
 
+  it("should persist player layout updates on clips", () => {
+    useTimelineStore.getState().updateClip("clip-1", {
+      playerLayout: {
+        left: 24,
+        top: 32,
+        width: 320,
+        height: 180,
+      },
+    });
+
+    const state = useTimelineStore.getState();
+    expect(state.clips["clip-1"].playerLayout).toEqual({
+      left: 24,
+      top: 32,
+      width: 320,
+      height: 180,
+    });
+  });
+
   it("should move clip references when changing layerId", () => {
     useTimelineStore.getState().updateClip("clip-1", { layerId: "layer-2" });
 
