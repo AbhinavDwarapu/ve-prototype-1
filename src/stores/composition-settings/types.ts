@@ -11,6 +11,9 @@ export type CompositionSettingsActions = {
   setDurationSec: (durationSec: number) => void;
   setDimensions: (width: number, height: number) => void;
   setPixelsPerSecond: (pixelsPerSecond: number) => void;
+  updateCompositionSettings: (
+    settings: Partial<CompositionSettingsState>,
+  ) => void;
 };
 
 export type CompositionSettingsStore = CompositionSettingsState &

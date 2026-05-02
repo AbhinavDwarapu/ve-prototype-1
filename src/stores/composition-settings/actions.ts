@@ -11,9 +11,11 @@ export const createCompositionSettingsActions = (
   | "setDurationSec"
   | "setDimensions"
   | "setPixelsPerSecond"
+  | "updateCompositionSettings"
 > => ({
   setFps: (fps) => set({ fps }),
   setDurationSec: (durationSec) => set({ durationSec }),
   setDimensions: (width, height) => set({ width, height }),
   setPixelsPerSecond: (pixelsPerSecond) => set({ pixelsPerSecond }),
+  updateCompositionSettings: (settings) => set(settings),
 });
