@@ -1,75 +1,85 @@
-# React + TypeScript + Vite
+# Web Video Editor Demo
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Summary
 
-Currently, two official plugins are available:
+A browser-based video editor prototype for arranging media on a timeline, previewing compositions, adjusting project and clip settings, and exporting rendered video.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+Key technologies include React, TypeScript, Vite, Remotion, Zustand, Tailwind CSS, Vitest, and Storybook.
 
-## React Compiler
+## Features
 
-The React Compiler is enabled on this template. See [this documentation](https://react.dev/learn/react-compiler) for more information.
+- Timeline editing for video composition.
+- Remotion-powered preview and browser rendering.
+- File and folder asset management.
+- Project and clip settings panels.
+- Client-side video export.
 
-Note: This will impact Vite dev & build performances.
+## Build Instructions
 
-## Expanding the ESLint configuration
+Clone with submodules:
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```sh
+git clone --recurse-submodules <repo-url>
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+If already cloned, initialize submodules:
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```sh
+git submodule update --init --recursive
 ```
+
+Install dependencies:
+
+```sh
+npm install
+```
+
+Build the production app:
+
+```sh
+npm run build
+```
+
+## Running Tests
+
+Run all tests:
+
+```sh
+npm test
+```
+
+Run unit tests only:
+
+```sh
+npm run test:unit
+```
+
+Run Storybook tests:
+
+```sh
+npm run test:storybook
+```
+
+## Running the Project
+
+Start the development server:
+
+```sh
+npm run dev
+```
+
+Preview a production build:
+
+```sh
+npm run preview
+```
+
+Start Storybook:
+
+```sh
+npm run storybook
+```
+
+## AI Usage
+
+AI tools were used to assist with development, code review, debugging, and documentation. All code was reviewed by a human.
